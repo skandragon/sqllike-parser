@@ -61,13 +61,21 @@ func parseExpr(p *parser, bp bindingPower) ast.Expr {
 	}
 	left := nud_fn(p)
 
-	for bp_lu[p.currentToken().Kind] > bp {
-		led_fn, exists := led_lu[p.currentToken().Kind]
-		if !exists {
-			panic("no led handler for " + p.currentToken().String())
+	for {
+		next := p.currentToken()
+		nextBP, exists := bp_lu[next.Kind]
+		if !exists || nextBP <= bp {
+			break
 		}
-		bp = bp_lu[p.currentToken().Kind]
-		left = led_fn(p, left, bp)
+
+		ledFn, ok := led_lu[next.Kind]
+		if !ok {
+			panic("no led handler for " + next.String())
+		}
+
+		// parse the infix operator (bind right at nextBP)
+		left = ledFn(p, left, nextBP)
 	}
+
 	return left
 }

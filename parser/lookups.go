@@ -82,5 +82,4 @@ func createTokenLookups() {
 	led(lexer.TokenAsterisk, multiplicative, parseBinaryExpr)
 	led(lexer.TokenSlash, multiplicative, parseBinaryExpr)
 	led(lexer.TokenPercent, multiplicative, parseBinaryExpr)
-
 }
