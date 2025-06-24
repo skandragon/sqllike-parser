@@ -36,6 +36,23 @@ func parseBinaryExpr(p *parser, left ast.Expr, bp bindingPower) ast.Expr {
 	}
 }
 
+func parseUnaryExpr(p *parser) ast.Expr {
+	operatorToken := p.advance()
+	right := parseExpr(p, unary)
+
+	return &ast.UnaryExpr{
+		Operator: operatorToken,
+		Right:    right,
+	}
+}
+
+func parseGroupingExpr(p *parser) ast.Expr {
+	p.expectError(lexer.TokenOpenParen, "expected '(' for grouping expression")
+	expr := parseExpr(p, defaultBP)
+	p.expectError(lexer.TokenCloseParen, "expected ')' to close grouping expression")
+	return expr
+}
+
 func parseExpr(p *parser, bp bindingPower) ast.Expr {
 	token := p.currentToken()
 	nud_fn, exists := nud_lu[token.Kind]

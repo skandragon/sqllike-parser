@@ -29,3 +29,10 @@ type BinaryExpr struct {
 }
 
 func (b *BinaryExpr) expr() {}
+
+type UnaryExpr struct {
+	Operator lexer.Token
+	Right    Expr
+}
+
+func (u *UnaryExpr) expr() {}

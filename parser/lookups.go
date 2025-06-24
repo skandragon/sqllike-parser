@@ -46,7 +46,6 @@ func nud(kind lexer.TokenKind, fn nudHandler) {
 		panic("nud already registered for " + kind.String())
 	}
 	nud_lu[kind] = fn
-	bp_lu[kind] = primary
 }
 
 func stmt(kind lexer.TokenKind, fn stmtHandler) {
@@ -61,6 +60,8 @@ func createTokenLookups() {
 	nud(lexer.TokenNumber, parsePrimaryExpr)
 	nud(lexer.TokenString, parsePrimaryExpr)
 	nud(lexer.TokenIdentifier, parsePrimaryExpr)
+	nud(lexer.TokenMinus, parseUnaryExpr)
+	nud(lexer.TokenOpenParen, parseGroupingExpr)
 
 	// Logical
 	led(lexer.TokenKeywordAnd, logical, parseBinaryExpr)
