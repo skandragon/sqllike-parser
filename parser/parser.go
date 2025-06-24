@@ -1,6 +1,8 @@
 package parser
 
 import (
+	"strconv"
+
 	"github.com/skandragon/sqllike-parser/ast"
 	"github.com/skandragon/sqllike-parser/lexer"
 )
@@ -50,7 +52,7 @@ func (p *parser) expectError(expectedKind lexer.TokenKind, err any) lexer.Token 
 	token := p.currentToken()
 	if token.Kind != expectedKind {
 		if err == nil {
-			err = "expected " + expectedKind.String() + " but found " + token.String()
+			err = "expected " + expectedKind.String() + " but found " + token.String() + " at position " + strconv.Itoa(p.pos)
 		}
 		panic(err)
 	}
