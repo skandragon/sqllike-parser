@@ -11,3 +11,13 @@ type ExpressionStmt struct {
 }
 
 func (e *ExpressionStmt) stmt() {}
+
+type SelectStmt struct {
+	Columns []Expr
+	Table   string
+	Where   Expr
+	GroupBy []Expr
+	Limit   int
+}
+
+func (s *SelectStmt) stmt() {}

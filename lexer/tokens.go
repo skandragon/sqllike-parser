@@ -31,29 +31,31 @@ const (
 	TokenGreaterThanOrEqual
 	TokenNotEqual
 
-	TokenKeywordSelect
-	TokenKeywordFrom
-	TokenKeywordWhere
 	TokenKeywordAnd
-	TokenKeywordOr
-	TokenKeywordNot
+	TokenKeywordBy
+	TokenKeywordFrom
+	TokenKeywordGroup
 	TokenKeywordIn
 	TokenKeywordLike
-	TokenKeywordGroup
-	TokenKeywordBy
+	TokenKeywordLimit
+	TokenKeywordNot
+	TokenKeywordOr
+	TokenKeywordSelect
+	TokenKeywordWhere
 )
 
 var keyword_lu map[string]TokenKind = map[string]TokenKind{
-	"SELECT": TokenKeywordSelect,
-	"FROM":   TokenKeywordFrom,
-	"WHERE":  TokenKeywordWhere,
 	"AND":    TokenKeywordAnd,
-	"OR":     TokenKeywordOr,
-	"NOT":    TokenKeywordNot,
+	"BY":     TokenKeywordBy,
+	"FROM":   TokenKeywordFrom,
+	"GROUP":  TokenKeywordGroup,
 	"IN":     TokenKeywordIn,
 	"LIKE":   TokenKeywordLike,
-	"GROUP":  TokenKeywordGroup,
-	"BY":     TokenKeywordBy,
+	"LIMIT":  TokenKeywordLimit,
+	"NOT":    TokenKeywordNot,
+	"OR":     TokenKeywordOr,
+	"SELECT": TokenKeywordSelect,
+	"WHERE":  TokenKeywordWhere,
 }
 
 type Token struct {
@@ -136,6 +138,8 @@ func (t TokenKind) String() string {
 		return "KEYWORD_GROUP"
 	case TokenKeywordBy:
 		return "KEYWORD_BY"
+	case TokenKeywordLimit:
+		return "KEYWORD_LIMIT"
 	default:
 		return fmt.Sprintf("UNKNOWN(%d)", t)
 	}

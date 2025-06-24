@@ -36,3 +36,10 @@ type UnaryExpr struct {
 }
 
 func (u *UnaryExpr) expr() {}
+
+type CallExpr struct {
+	Function string
+	Args     []Expr
+}
+
+func (c *CallExpr) expr() {}

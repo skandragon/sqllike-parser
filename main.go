@@ -12,8 +12,8 @@ import (
 // --- end of Ragel block --------------------------------
 
 func main() {
-	//stmt := `SELECT * FROM metrics WHERE frequency=10000 AND "_cardinalhq.name" = 'k8s.cpu.usage' AND resource.cluster.name = 'prod-cluster'`
-	stmt := `45.2 + 5 * 4 - -5;`
+	stmt := `SELECT resource.name, sum(_cardinalhq.value) FROM metrics WHERE frequency=10000 AND "_cardinalhq.name" = 'k8s.cpu.usage' AND resource.cluster.name = 'prod-cluster' GROUP BY resource.name LIMIT 100;`
+	//stmt := `45.2 + (5 * 4 -5);`
 	tokens := lexer.Tokenize(stmt)
 	for _, token := range tokens {
 		fmt.Printf("%s\n", token.DebugString())
