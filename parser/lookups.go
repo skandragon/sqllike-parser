@@ -61,4 +61,25 @@ func createTokenLookups() {
 	nud(lexer.TokenNumber, parsePrimaryExpr)
 	nud(lexer.TokenString, parsePrimaryExpr)
 	nud(lexer.TokenIdentifier, parsePrimaryExpr)
+
+	// Logical
+	led(lexer.TokenKeywordAnd, logical, parseBinaryExpr)
+	led(lexer.TokenKeywordOr, logical, parseBinaryExpr)
+
+	// Relational
+	led(lexer.TokenEqual, relational, parseBinaryExpr)
+	led(lexer.TokenNotEqual, relational, parseBinaryExpr)
+	led(lexer.TokenLessThan, relational, parseBinaryExpr)
+	led(lexer.TokenGreaterThan, relational, parseBinaryExpr)
+	led(lexer.TokenLessThanOrEqual, relational, parseBinaryExpr)
+	led(lexer.TokenGreaterThanOrEqual, relational, parseBinaryExpr)
+	led(lexer.TokenKeywordLike, relational, parseBinaryExpr)
+
+	// Additive and Multiplicative
+	led(lexer.TokenPlus, additive, parseBinaryExpr)
+	led(lexer.TokenMinus, additive, parseBinaryExpr)
+	led(lexer.TokenAsterisk, multiplicative, parseBinaryExpr)
+	led(lexer.TokenSlash, multiplicative, parseBinaryExpr)
+	led(lexer.TokenPercent, multiplicative, parseBinaryExpr)
+
 }

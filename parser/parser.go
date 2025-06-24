@@ -1,8 +1,6 @@
 package parser
 
 import (
-	"strconv"
-
 	"github.com/skandragon/sqllike-parser/ast"
 	"github.com/skandragon/sqllike-parser/lexer"
 )
@@ -42,23 +40,23 @@ func (p *parser) advance() lexer.Token {
 }
 
 func (p *parser) hasTokens() bool {
-	return p.pos < len(p.tokens) && p.tokens[p.pos].Kind() != lexer.TokenEOF
+	return p.pos < len(p.tokens) && p.tokens[p.pos].Kind != lexer.TokenEOF
 }
 
-func parsePrimaryExpr(p *parser) ast.Expr {
-	token := p.advance()
-	switch token.Kind() {
-	case lexer.TokenNumber:
-		v, err := strconv.ParseFloat(token.Value(), 64)
-		if err != nil {
-			panic("invalid number: " + token.Value())
-		}
-		return &ast.NumberExpr{Value: v}
-	case lexer.TokenString:
-		return &ast.StringExpr{Value: token.Value()}
-	case lexer.TokenIdentifier:
-		return &ast.SymbolExpr{Value: token.Value()}
-	default:
-		panic("invalid type for parsePrimaryExpr: " + token.String())
+func (p *parser) expectError(expectedKind lexer.TokenKind, err any) lexer.Token {
+	if !p.hasTokens() {
+		panic("unexpected end of input")
 	}
+	token := p.currentToken()
+	if token.Kind != expectedKind {
+		if err == nil {
+			err = "expected " + expectedKind.String() + " but found " + token.String()
+		}
+		panic(err)
+	}
+	return p.advance()
+}
+
+func (p *parser) expect(expectedKind lexer.TokenKind) lexer.Token {
+	return p.expectError(expectedKind, nil)
 }

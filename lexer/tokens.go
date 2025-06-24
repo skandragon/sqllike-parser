@@ -57,27 +57,19 @@ var keyword_lu map[string]TokenKind = map[string]TokenKind{
 }
 
 type Token struct {
-	kind  TokenKind
-	value string
-}
-
-func (t Token) Value() string {
-	return t.value
-}
-
-func (t Token) Kind() TokenKind {
-	return t.kind
+	Kind  TokenKind
+	Value string
 }
 
 func NewToken(kind TokenKind, value string) Token {
 	return Token{
-		kind:  kind,
-		value: value,
+		Kind:  kind,
+		Value: value,
 	}
 }
 
 func (t Token) isOneOf(kinds ...TokenKind) bool {
-	return slices.Contains(kinds, t.kind)
+	return slices.Contains(kinds, t.Kind)
 }
 
 func (t TokenKind) String() string {
@@ -150,10 +142,10 @@ func (t TokenKind) String() string {
 }
 
 func (t Token) String() string {
-	return fmt.Sprintf("%s(%s)", t.Kind().String(), t.value)
+	return fmt.Sprintf("%s(%s)", t.Kind.String(), t.Value)
 }
 
 func (t Token) DebugString() string {
 	ts := t.String()
-	return fmt.Sprintf("Token{kind: %s (%s)}", ts, t.value)
+	return fmt.Sprintf("Token{kind: %s (%s)}", ts, t.Value)
 }
